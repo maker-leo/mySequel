@@ -23,5 +23,47 @@ class Sequel < ActiveRecord::Base
       # The neatest way of doing it, but remember this won't work for more complex queries
       joins(:director).where("directors.name" => director).count
     end
+
+    def total_gross
+      sum('gross_earnings')
+    end
+
+    def total_gross_by_year_after(year)
+      where("year > ?", year)
+      .group("year")
+      .sum("gross_earnings")
+    end
+
+    def total_by_genre(genre)
+      joins(:genres)
+      .where("genres.name" => genre)
+      .count
+    end
+
+    def average_gross_for(director)
+      joins(:director)
+      .where("directors.name" => director)
+      .average('gross_earnings')
+      .to_i
+    end
+
+    def minimum_made_by(director)
+      joins(:director)
+      .where("directors.name" => director)
+      .minimum('gross_earnings')
+    end
+
+    def maximum_gross_before(year)
+      where("year < ?", year)
+      .maximum('gross_earnings')
+    end
+
+    def highest_grossing_by_genre_and_director(genre, director)
+      joins(:director)
+      .joins(:genres)
+      .where("directors.name" => director)
+      .where("genres.name" => genre)
+      .maximum("gross_earnings")
+    end
   end
 end
