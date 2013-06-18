@@ -15,3 +15,7 @@ Note you can use either `find_by_sql` in order to run your SQL using basically r
 Although we don't normally recommend using fixtures in this example it makes sense to quickly add some dummy data into your databases. You'll see the data in the fixtures folder, to get it into your database just run `db:test:prepare` (after running `db:setup` first).
 
 Remember this will only add the fixture data to your test database which is **not** the database used when you run `rails dbconsole` you'll need to connect to your test database instead.
+
+### Zeus
+
+This uses [Zeus](https://github.com/burke/zeus) when using Guard to speed up running the tests, to make it work just open a browser and run `zeus start` in it.
